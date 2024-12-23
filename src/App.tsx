@@ -1,4 +1,4 @@
-import { Box, Flex, Typography } from '@ergolabs/ui-kit';
+import { Box, Flex, Typography, useDevice } from '@ergolabs/ui-kit';
 import { Suspense, useEffect } from 'react';
 import * as React from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -40,6 +40,7 @@ const initializeApp = () => {
 export const ApplicationInitializer: React.FC = () => {
   const [{ theme }] = useApplicationSettings();
   const [] = useObservable(isAppInitialized$, [], false);
+  const { s } = useDevice();
 
   useBodyClass([theme]);
   useMetaThemeColor(
@@ -63,8 +64,12 @@ export const ApplicationInitializer: React.FC = () => {
         <BrowserRouter>
           <LanguageProvider>
             <Glow />
-            <Flex align="center" justify="center">
-              <Box borderRadius="xl" padding={4}>
+            <Flex
+              align="center"
+              justify="center"
+              style={{ height: s ? undefined : '100%' }}
+            >
+              <Box borderRadius="xl" padding={s ? [4, 4, 20, 4] : 4}>
                 <Flex style={{ maxWidth: '500px' }} col>
                   <Typography.Body>Dear Community Member,</Typography.Body>
                   <br />
